@@ -22,14 +22,14 @@ bot.on('message', (msg) => {
   var chat_id = data.chat.id;
   var message_id = data.message_id;
   if (data.hasOwnProperty("text")) {
-    console.log(data.chat);
-        opts = {
-          parse_mode: 'Markdown'
-        };
-      }
-      text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:'+'message';
-      //bot.sendMessage(-1001320202440, text_message, opts);
-      bot.sendMessage(chat_id, text_message, opts);
-      return 1;
+    if (data.chat.type == "private") {
+      opts = {
+        parse_mode: 'Markdown'
+      };
+    }
+    text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:' + message;
+    bot.sendMessage(-1001320202440, text_message, opts);
+    return 1;
+  }
 });
 module.exports = bot;
