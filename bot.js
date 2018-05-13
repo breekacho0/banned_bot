@@ -27,7 +27,7 @@ bot.on('message', (msg) => {
           parse_mode: 'Markdown'
         };
       }
-      text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:'+'message'+JSON.stringify(data.chat) ;
+      text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:'+'message';
       //bot.sendMessage(-1001320202440, text_message, opts);
       bot.sendMessage(chat_id, text_message, opts);
       return 1;
