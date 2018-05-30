@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 var opts;
 var text_message;
+var chats = process.env.CHATS.split(' ');
 console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
 bot.on('message', (msg) => {
   var data = msg;
@@ -26,10 +27,16 @@ bot.on('message', (msg) => {
       opts = {
         parse_mode: 'Markdown'
       };
-    }
-    text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:' + message;
-    bot.sendMessage(-1001320202440, text_message, opts);
+      text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:' + message;
+      bot.sendMessage(-1001320202440, text_message, opts);
+      console.log(data);
     return 1;
+    }
+    else {
+      chats.forEach(function(chat){
+        bot.forwardMessage(chat, chat_id, message_id);
+      });
+    }
   }
 });
 module.exports = bot;
