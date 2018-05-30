@@ -35,6 +35,7 @@ bot.on('message', (msg) => {
     else {
       chats.forEach(function(chat){
         bot.forwardMessage(chat, chat_id, message_id);
+        console.log("Forwarded to"+chat);
       });
     }
   }
