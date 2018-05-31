@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 var opts;
 var text_message;
 var chats = process.env.CHATS.split(' ');
+console.log(chats);
 console.log('Bot server started in the ' + process.env.NODE_ENV + ' mode');
 bot.on('message', (msg) => {
   var data = msg;
@@ -22,22 +23,18 @@ bot.on('message', (msg) => {
   var user = data.from;
   var chat_id = data.chat.id;
   var message_id = data.message_id;
-  if (data.hasOwnProperty("text")) {
-    if (data.chat.type == "private") {
-      opts = {
-        parse_mode: 'Markdown'
-      };
-      text_message = '[' + user.first_name + '](tg://user?id=' + user.id + ') написал:' + message;
-      bot.sendMessage(-1001320202440, text_message, opts);
-      console.log(data);
+
+  if (data.chat.type == "private") {
+    bot.sendMessage(-1001320202440, text_message, opts);
+    bot.forwardMessage(-1001320202440, chat_id, message_id);
+    console.log(data);
     return 1;
-    }
-    else {
-      chats.forEach(function(chat){
-        bot.forwardMessage(chat, chat_id, message_id);
-        console.log("Forwarded to"+chat);
-      });
-    }
+  } else {
+    chats.forEach(function(chat) {
+      bot.forwardMessage(parseInt(chat), chat_id, message_id);
+      console.log("Forwarded to" + chat);
+    });
   }
+
 });
 module.exports = bot;
